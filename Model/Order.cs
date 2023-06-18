@@ -9,6 +9,6 @@ public class Order
     public int UserId { get; set; }
     public string? OrderStatus { get; set; }
     public DateTime OrderTime { get; set; }
-    public User? User { get; set; }
-    public List<OrderItem>? OrderItems { get; set; }
+    public virtual User? User { get; set; }
+    public virtual List<OrderItem> OrderItems { get; set; }
 }

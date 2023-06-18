@@ -105,9 +105,11 @@
                     <StackPanel Orientation="Horizontal">
                         
                         <TextBox Style="{StaticResource RoundedTBox}"
-                                 Margin="0, 10"/>
+                                 Margin="70, 10, 10, 10"
+                                 Text="{Binding IngredientName}"/>
 
-                        <xctk:IntegerUpDown Name="myUpDownControl" />
+                        <xctk:IntegerUpDown Height="30"
+                                            Value="{Binding Quantity}"/>
 
 
                     </StackPanel>

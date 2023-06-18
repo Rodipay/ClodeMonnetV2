@@ -9,5 +9,5 @@ public class Dish
     public decimal? Price { get; set; }
     public string? Category { get; set; }
     public string? ImagePath { get; set; }
-    public List<Ingredient>? Ingredients { get; set; }
+    public virtual List<Ingredient>? Ingredients { get; set; }
 }

@@ -17,7 +17,7 @@ namespace ClodeMonnetV2.ViewModel
     {
         private readonly RestaurantDbContext _context;
         private ObservableCollection<Dish> _dishes;
-        private static AddDishView _newDishDialog = new AddDishView()
+        private static AddDishView _addDishDialog = new AddDishView()
         {
             Width = 600,
             Height = 400,
@@ -85,15 +85,9 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public static AddDishView GetNewDishDialog() => _newDishDialog;
+        public static AddDishView GetNewDishDialog() => _addDishDialog;
         private void AddDish(object parameter)
         {
-            _newDishDialog = new AddDishView()
-            {
-                Width = 300,
-                Height = 400,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
             GetNewDishDialog().ShowDialog();
             LoadDishes();
         }

@@ -42,6 +42,9 @@ namespace ClodeMonnetV2.Model
                 .HasForeignKey(oi => oi.OrderId);
 
             modelBuilder.Entity<OrderItem>()
+                .HasKey(oi => new { oi.OrderId, oi.DishId });
+
+            modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.Dish)
                 .WithMany()
                 .HasForeignKey(oi => oi.DishId);

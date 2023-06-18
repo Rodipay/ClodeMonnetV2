@@ -16,6 +16,8 @@ namespace ClodeMonnetV2.ViewModel
         private string _dishName;
         private decimal _price;
         private string _category;
+        private int _quantity;
+        private string _ingredientName;
         private ObservableCollection<Ingredient> _ingredients;
         private ICommand _addIngredientCommand;
         private ICommand _saveDishCommand;
@@ -47,6 +49,26 @@ namespace ClodeMonnetV2.ViewModel
             {
                 _category = value;
                 OnPropertyChanged(nameof(Category));
+            }
+        }
+
+        public int Quantity
+        {
+            get => _quantity;
+            set
+            {
+                _quantity = value;
+                OnPropertyChanged(nameof(Quantity));
+            }
+        }
+
+        public string IngredientName
+        {
+            get => _ingredientName;
+            set
+            {
+                _ingredientName = value;
+                OnPropertyChanged(nameof(IngredientName));
             }
         }
 
@@ -89,7 +111,11 @@ namespace ClodeMonnetV2.ViewModel
 
         private void AddIngredient(object parameter)
         {
-            // Логика добавления ингредиента
+            Ingredients.Add(new Ingredient
+            {
+                IngredientName = IngredientName,
+                Quantity = Quantity
+            });
         }
 
         private void SaveDish(object parameter)
