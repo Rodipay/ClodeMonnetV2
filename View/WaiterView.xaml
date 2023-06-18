@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ClodeMonnetV2.View.Waiter"
+﻿<UserControl x:Class="ClodeMonnetV2.View.WaiterView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -62,9 +62,11 @@
                                                Width="80"
                                                Height="80"/>
                                     <TextBlock Text="{Binding DishName}"
-                                               Style="{StaticResource TextStyle}" />
+                                               Style="{StaticResource TextStyle}"
+                                               HorizontalAlignment="Center"/>
                                     <TextBlock Text="{Binding Price}"
-                                               Style="{StaticResource TextStyle}" />
+                                               Style="{StaticResource TextStyle}"
+                                               HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
                         </DataTemplate>

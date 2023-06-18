@@ -13,15 +13,15 @@ namespace ClodeMonnetV2.ViewModel
 {
     internal class WaiterVM : ViewModelBase
     {
-        private Order _currentOrder;
-        private int _quantity;
-        private ObservableCollection<Dish> _dishes;
-        private ObservableCollection<OrderItem> _orderItems;
+        private Order? _currentOrder;
+        private int? _quantity;
+        private ObservableCollection<Dish>? _dishes;
+        private ObservableCollection<OrderItem>? _orderItems;
 
         public ICommand AddToOrderCommand { get; }
         public ICommand ConfirmOrderCommand { get; }
 
-        public Order CurrentOrder
+        public Order? CurrentOrder
         {
             get => _currentOrder;
             set
@@ -31,7 +31,7 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public int Quantity
+        public int? Quantity
         {
             get => _quantity;
             set
@@ -40,7 +40,7 @@ namespace ClodeMonnetV2.ViewModel
                 OnPropertyChanged(nameof(Quantity));
             }
         }
-        public ObservableCollection<Dish> Dishes
+        public ObservableCollection<Dish>? Dishes
         {
             get => _dishes;
             set
@@ -49,7 +49,7 @@ namespace ClodeMonnetV2.ViewModel
                 OnPropertyChanged(nameof(Dishes));
             }
         }
-        public ObservableCollection<OrderItem> OrderItems
+        public ObservableCollection<OrderItem>? OrderItems
         {
             get => _orderItems;
             set
@@ -63,7 +63,8 @@ namespace ClodeMonnetV2.ViewModel
         {
             OrderItems = new ObservableCollection<OrderItem>();
             using RestaurantDbContext context = new RestaurantDbContext();
-            context.Dishes.LoadAsync();
+            //context.Dishes.LoadAsync();
+            Dishes = new ObservableCollection<Dish>(context.Dishes.ToList());
             AddToOrderCommand = new RelayCommand(AddToOrder);
             ConfirmOrderCommand = new RelayCommand(ConfirmOrder);
         }
@@ -81,15 +82,23 @@ namespace ClodeMonnetV2.ViewModel
 
         public void ConfirmOrder(object parameter)
         {
+            RestaurantDbContext context = new RestaurantDbContext();
             CurrentOrder = new Order()
             {
                 OrderTime = DateTime.Now,
                 OrderStatus = "Принят"
             };
-            RestaurantDbContext context = new RestaurantDbContext();
             context.Orders.Add(CurrentOrder);
+            context.SaveChanges();
+
+            foreach (var orderItem in OrderItems)
+            {
+                orderItem.OrderId = CurrentOrder.OrderId;
+            }
+
             context.OrderItems.AddRange(OrderItems);
             context.SaveChanges();
         }
+
     }
 }
