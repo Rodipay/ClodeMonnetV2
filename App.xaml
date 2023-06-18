@@ -14,8 +14,8 @@
                 <ResourceDictionary Source="/Style/Text.xaml" />
                 <ResourceDictionary Source="/Style/Button.xaml" />
                 <ResourceDictionary Source="/Style/TextBox.xaml" />
-                <!--<ResourceDictionary Source="Styles/ScrollView.xaml" />
-                <ResourceDictionary Source="Styles/ComboBox.xaml" />
+                <ResourceDictionary Source="/Style/ScrollView.xaml" />
+                <!--<ResourceDictionary Source="Styles/ComboBox.xaml" />
                 <ResourceDictionary Source="Styles/DataGrid.xaml" />
                 <ResourceDictionary Source="Controls/NumericUpDown/NumericUpDown.xaml" />-->
                 <ResourceDictionary Source="Utilities/DataTemplate.xaml" />
