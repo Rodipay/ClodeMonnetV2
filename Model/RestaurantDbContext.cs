@@ -7,7 +7,6 @@ namespace ClodeMonnetV2.Model
     {
         public RestaurantDbContext()
         {
-            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -21,7 +20,7 @@ namespace ClodeMonnetV2.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseLazyLoadingProxies().UseSqlite("Data Source=ClodeMonnet.db");
+                optionsBuilder.UseLazyLoadingProxies().UseSqlite("Data Source=ClodeMonnetV2.db");
             }
         }
 

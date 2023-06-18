@@ -5,24 +5,30 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace ClodeMonnetV2.ViewModel
 {
     internal class AddDishVM : ViewModelBase
     {
-        private string _dishName;
-        private decimal _price;
-        private string _category;
-        private int _quantity;
-        private string _ingredientName;
-        private ObservableCollection<Ingredient> _ingredients;
-        private ICommand _addIngredientCommand;
-        private ICommand _saveDishCommand;
+        private string? _dishName;
+        private decimal? _price;
+        private string? _category;
+        private string? _imagePath;
+        private int? _quantity;
+        private string? _ingredientName;
+        private ObservableCollection<Ingredient>? _ingredients;
 
-        public string DishName
+        public ICommand AddIngredientCommand { get; set; }
+        public ICommand SaveDishCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
+
+        public string? DishName
         {
             get => _dishName;
             set
@@ -32,7 +38,7 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public decimal Price
+        public decimal? Price
         {
             get => _price;
             set
@@ -42,7 +48,7 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public string Category
+        public string? Category
         {
             get => _category;
             set
@@ -52,7 +58,17 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public int Quantity
+        public string? ImagePath
+        {
+            get => _imagePath;
+            set
+            {
+                _imagePath = value;
+                OnPropertyChanged(nameof(ImagePath));
+            }
+        }
+
+        public int? Quantity
         {
             get => _quantity;
             set
@@ -62,7 +78,7 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public string IngredientName
+        public string? IngredientName
         {
             get => _ingredientName;
             set
@@ -72,7 +88,7 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public ObservableCollection<Ingredient> Ingredients
+        public ObservableCollection<Ingredient>? Ingredients
         {
             get => _ingredients;
             set
@@ -82,36 +98,17 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public ICommand AddIngredientCommand
-        {
-            get => _addIngredientCommand;
-            set
-            {
-                _addIngredientCommand = value;
-                OnPropertyChanged(nameof(AddIngredientCommand));
-            }
-        }
-
-        public ICommand SaveDishCommand
-        {
-            get => _saveDishCommand;
-            set
-            {
-                _saveDishCommand = value;
-                OnPropertyChanged(nameof(SaveDishCommand));
-            }
-        }
-
         public AddDishVM()
         {
             Ingredients = new ObservableCollection<Ingredient>();
             AddIngredientCommand = new RelayCommand(AddIngredient);
             SaveDishCommand = new RelayCommand(SaveDish);
+            CancelCommand = new RelayCommand(Cancel);
         }
 
         private void AddIngredient(object parameter)
         {
-            Ingredients.Add(new Ingredient
+            Ingredients?.Add(new Ingredient
             {
                 IngredientName = IngredientName,
                 Quantity = Quantity
@@ -120,7 +117,24 @@ namespace ClodeMonnetV2.ViewModel
 
         private void SaveDish(object parameter)
         {
-            // Логика сохранения блюда
+            var newDish = new Dish
+            {
+                DishName = _dishName,
+                Price = _price,
+                Category = _category,
+                ImagePath = _imagePath
+            };
+            using (RestaurantDbContext context = new RestaurantDbContext())
+            {
+                context.Dishes.Add(newDish);
+                context.SaveChanges();
+            }
+            ChefVM.GetNewDishDialog().Close();
+        }
+
+        private void Cancel(object parameter)
+        {
+            ChefVM.GetNewDishDialog().Close();
         }
     }
 }

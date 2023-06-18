@@ -88,12 +88,17 @@ namespace ClodeMonnetV2.ViewModel
         public static AddDishView GetNewDishDialog() => _addDishDialog;
         private void AddDish(object parameter)
         {
+            _addDishDialog = new AddDishView()
+            {
+                Width = 600,
+                Height = 400,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
             GetNewDishDialog().ShowDialog();
             LoadDishes();
         }
         private void EditDish(object parameter)
         {
-
             _context.SaveChanges();
         }
         private bool CanEditOrDeleteDish(object parameter) => Dishes.Count > 0;

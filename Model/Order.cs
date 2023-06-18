@@ -10,5 +10,5 @@ public class Order
     public string? OrderStatus { get; set; }
     public DateTime OrderTime { get; set; }
     public virtual User? User { get; set; }
-    public virtual List<OrderItem> OrderItems { get; set; }
+    public virtual List<OrderItem>? OrderItems { get; set; }
 }

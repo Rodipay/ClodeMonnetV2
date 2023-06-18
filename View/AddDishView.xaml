@@ -62,7 +62,7 @@
 
                     <Button Content="Сохранить"
                             Margin="0, 10"
-                            Command="{Binding SaveCommand}"
+                            Command="{Binding SaveDishCommand}"
                             Style="{StaticResource CustomBtn}" />
 
                     <Button Content="Отмена"

@@ -1,12 +1,116 @@
-﻿<UserControl x:Class="ClodeMonnetV2.View.WaiterView"
+﻿<UserControl x:Class="ClodeMonnetV2.View.Waiter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ClodeMonnetV2.View"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:vm="clr-namespace:ClodeMonnetV2.ViewModel"
+             xmlns:converters="clr-namespace:ClodeMonnetV2.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600"
+             d:DesignWidth="622"
+             Style="{StaticResource PageStyle}">
+
+    <UserControl.DataContext>
+        <vm:WaiterVM />
+    </UserControl.DataContext>
+
     <Grid>
-            
+        <Grid.Resources>
+            <converters:ImagePathConverter x:Key="ImagePathConverter" />
+            <converters:DishNameConverter x:Key="DishNameConverter"/>
+        </Grid.Resources>
+
+        <Border CornerRadius="0, 20, 20, 0">
+            <Border.Background>
+                <SolidColorBrush Color="#212529" />
+            </Border.Background>
+        </Border>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="420" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Style="{StaticResource SearchBar}" />
+
+            <ScrollViewer Grid.Column="0"
+                          Width="420"
+                          HorizontalAlignment="Left"
+                          Grid.Row="1"
+                          Grid.RowSpan="2">
+                <ItemsControl ItemsSource="{Binding Dishes}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource BtnMenu}"
+                                    Command="{Binding DataContext.AddToOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                    CommandParameter="{Binding}">
+                                <StackPanel VerticalAlignment="Center">
+                                    <Image Source="{Binding ImagePath, Converter={StaticResource ImagePathConverter}}"
+                                               Width="80"
+                                               Height="80"/>
+                                    <TextBlock Text="{Binding DishName}"
+                                               Style="{StaticResource TextStyle}" />
+                                    <TextBlock Text="{Binding Price}"
+                                               Style="{StaticResource TextStyle}" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </ScrollViewer>
+
+            <ScrollViewer Width="202"
+                          HorizontalAlignment="Center"
+                          Grid.Row="1"
+                          Grid.Column="1">
+                <ItemsControl ItemsSource="{Binding OrderItems}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding DishId, Converter={StaticResource DishNameConverter}}"
+                                               Grid.Column="0"
+                                               Margin="7, 0"
+                                               Style="{StaticResource OrderItemText}" />
+                                    <xctk:IntegerUpDown Grid.Column="1"
+                                                        Height="30"
+                                                        Value="{Binding Quantity}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button Grid.Column="1"
+                    Grid.Row="2"
+                    Margin="30"
+                    Style="{StaticResource CustomBtn}"
+                    Command="{Binding ConfirmOrderCommand}"
+                    Content="Отправить"/>
+        </Grid>
+
     </Grid>
 </UserControl>

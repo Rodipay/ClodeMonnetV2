@@ -35,6 +35,39 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="BtnMenu" TargetType="Button">
+        <Setter Property="Background" Value="#30ffffff" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="20, 20, 0, 0" />
+        <Setter Property="Width" Value="180" />
+        <Setter Property="Height" Value="180" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="20">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Content="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+
+            <Trigger Property="IsMouseOver" Value="True">
+
+                <Setter Property="Background" Value="#50ffffff" />
+
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
     <Style x:Key="BtnStyle"
            TargetType="RadioButton">
 
