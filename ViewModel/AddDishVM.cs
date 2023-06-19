@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -117,19 +118,26 @@ namespace ClodeMonnetV2.ViewModel
 
         private void SaveDish(object parameter)
         {
-            var newDish = new Dish
+            if (_dishName != null && _price != null && _category != null && _imagePath != null)
             {
-                DishName = _dishName,
-                Price = _price,
-                Category = _category,
-                ImagePath = _imagePath
-            };
-            using (RestaurantDbContext context = new RestaurantDbContext())
-            {
-                context.Dishes.Add(newDish);
-                context.SaveChanges();
+                var newDish = new Dish
+                {
+                    DishName = _dishName,
+                    Price = _price,
+                    Category = _category,
+                    ImagePath = _imagePath
+                };
+                using (RestaurantDbContext context = new RestaurantDbContext())
+                {
+                    context.Dishes.Add(newDish);
+                    context.SaveChanges();
+                }
+
+                ChefVM.GetNewDishDialog().Close();
+                MessageBox.Show($"Блюдо \"{DishName}\" успешно добавлено в меню.");
+                
             }
-            ChefVM.GetNewDishDialog().Close();
+            else MessageBox.Show("Заполните все поля.");
         }
 
         private void Cancel(object parameter)

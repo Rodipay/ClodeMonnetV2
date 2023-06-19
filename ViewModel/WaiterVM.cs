@@ -64,7 +64,7 @@ namespace ClodeMonnetV2.ViewModel
             OrderItems = new ObservableCollection<OrderItem>();
             using RestaurantDbContext context = new RestaurantDbContext();
             //context.Dishes.LoadAsync();
-            Dishes = new ObservableCollection<Dish>(context.Dishes.ToList());
+            Dishes = new ObservableCollection<Dish>(context.Dishes.ToList()!);
             AddToOrderCommand = new RelayCommand(AddToOrder);
             ConfirmOrderCommand = new RelayCommand(ConfirmOrder);
         }
@@ -85,13 +85,14 @@ namespace ClodeMonnetV2.ViewModel
             RestaurantDbContext context = new RestaurantDbContext();
             CurrentOrder = new Order()
             {
+                UserId = 1,
                 OrderTime = DateTime.Now,
                 OrderStatus = "Принят"
             };
             context.Orders.Add(CurrentOrder);
             context.SaveChanges();
 
-            foreach (var orderItem in OrderItems)
+            foreach (var orderItem in OrderItems!)
             {
                 orderItem.OrderId = CurrentOrder.OrderId;
             }

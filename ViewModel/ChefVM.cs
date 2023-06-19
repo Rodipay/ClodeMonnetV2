@@ -16,7 +16,7 @@ namespace ClodeMonnetV2.ViewModel
     internal class ChefVM : ViewModelBase
     {
         private readonly RestaurantDbContext _context;
-        private ObservableCollection<Dish> _dishes;
+        private ObservableCollection<Dish?> _dishes;
         private static AddDishView _addDishDialog = new AddDishView()
         {
             Width = 600,
@@ -28,10 +28,10 @@ namespace ClodeMonnetV2.ViewModel
         public ChefVM()
         {
             _context = new RestaurantDbContext();
-            _dishes = new ObservableCollection<Dish>();
+            _dishes = new ObservableCollection<Dish?>();
             LoadDishes();
             AddDishCommand = new RelayCommand(AddDish);
-            EditDishCommand = new RelayCommand(EditDish, CanEditOrDeleteDish);
+            UpdateDishCommand = new RelayCommand(UpdateDish, CanEditOrDeleteDish);
             DeleteDishCommand = new RelayCommand(DeleteDish, CanEditOrDeleteDish);
         }
 
@@ -45,7 +45,7 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public ObservableCollection<Dish> Dishes
+        public ObservableCollection<Dish?> Dishes
         {
             get => _dishes;
             set
@@ -56,7 +56,7 @@ namespace ClodeMonnetV2.ViewModel
         }
 
         public ICommand AddDishCommand { get; }
-        public ICommand EditDishCommand { get; }
+        public ICommand UpdateDishCommand { get; }
         public ICommand DeleteDishCommand { get; }
 
         //private async Task LoadDishesAsync()
@@ -97,8 +97,18 @@ namespace ClodeMonnetV2.ViewModel
             GetNewDishDialog().ShowDialog();
             LoadDishes();
         }
-        private void EditDish(object parameter)
+        private void UpdateDish(object parameter)
         {
+            Dish? dataToUpdate =  _context.Dishes.Find(SelectedDish.DishId);
+
+            if (dataToUpdate != null)
+            {
+                dataToUpdate.DishName = SelectedDish.DishName;
+                dataToUpdate.Price = SelectedDish.Price;
+                dataToUpdate.Category = SelectedDish.Category;
+                dataToUpdate.ImagePath = SelectedDish.ImagePath;
+            }
+
             _context.SaveChanges();
         }
         private bool CanEditOrDeleteDish(object parameter) => Dishes.Count > 0;

@@ -46,7 +46,7 @@
                     <DataGridTemplateColumn Header="Изменить">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Изменить" Command="{Binding DataContext.EditDishCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" />
+                                <Button Content="Изменить" Command="{Binding DataContext.UpdateDishCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
