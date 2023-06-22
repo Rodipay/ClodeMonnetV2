@@ -40,38 +40,42 @@
                     <DataTemplate>
 
                         <Button Style="{StaticResource BtnMenu}"
-                                Command="{Binding DataContext.ToggleVisibilityCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
+                                Command="{Binding DataContext.ToggleVisibilityCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                CommandParameter="{Binding}">
 
                             <Grid>
 
                                 <StackPanel VerticalAlignment="Center"
-                                            Visibility="{Binding DataContext.IsInfoPanelVisible, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            Visibility="{Binding IsInfoPanelVisible, Converter={StaticResource BoolToVisibilityConverter}}">
 
                                     <StackPanel Orientation="Horizontal">
 
                                         <TextBlock Text="Заказ #"
                                                    Style="{StaticResource BtnMenuTextStyle}"/>
-                                        <TextBlock Text="{Binding OrderId}"
+                                        <TextBlock Text="{Binding Order.OrderId}"
                                                    Style="{StaticResource BtnMenuTextStyle}"
                                                    HorizontalAlignment="Center"/>
                                     </StackPanel>
 
-                                    <TextBlock Text="{Binding OrderStatus}"
+                                    <TextBlock Text="{Binding Order.OrderStatus}"
                                                Style="{StaticResource BtnMenuTextStyle}"
                                                HorizontalAlignment="Center"/>
 
-                                    <TextBlock Text="{Binding OrderId, Converter={StaticResource OrderIdToDishNameConverter}}" 
+                                    <TextBlock Text="{Binding Order.OrderId, Converter={StaticResource OrderIdToDishNameConverter}}" 
                                                Style="{StaticResource BtnMenuTextStyle}"
                                                HorizontalAlignment="Center"/>
 
                                 </StackPanel>
 
                                 <StackPanel VerticalAlignment="Center"
-                                            Visibility="{Binding DataContext.IsInfoPanelVisible, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}">
+                                            Visibility="{Binding IsInfoPanelVisible, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Reverse}">
 
-                                    <Button Content="Готовится"/>
-                                    <Button Content="Задерживется"/>
-                                    <Button Content="Готов"/>
+                                    <Button Content="Готовится"
+                                            Command="{Binding DataContext.SetPreparingStatusCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}"/>
+                                    <Button Content="Задерживется"
+                                            Command="{Binding DataContext.SetDelayedStatusCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}"/>
+                                    <Button Content="Готов"
+                                            Command="{Binding DataContext.SetReadyStatusCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}"/>
 
                                 </StackPanel>
 

@@ -6,7 +6,7 @@
         <Setter Property="Background"
                 Value="#17bae3" />
         <Setter Property="Height"
-                Value="40" />
+                Value="30" />
         <Setter Property="Foreground"
                 Value="#DBDBDB" />
         <Setter Property="Template">
@@ -15,7 +15,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="20">
+                            CornerRadius="15">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Content="{TemplateBinding Content}"/>

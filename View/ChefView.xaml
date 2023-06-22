@@ -31,7 +31,6 @@
                     Command="{Binding AddDishCommand}"
                     Style="{StaticResource CustomBtn}"
                     Width="160"
-                    Height="40"
                     Margin="10,0,0,10"
                     HorizontalAlignment="Left"/>
 
