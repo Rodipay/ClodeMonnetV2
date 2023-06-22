@@ -7,7 +7,8 @@ namespace ClodeMonnetV2.Model
     {
         public RestaurantDbContext()
         {
-            Database.EnsureCreated();
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
 
         public DbSet<User> Users { get; set; }

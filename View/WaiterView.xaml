@@ -62,10 +62,10 @@
                                                Width="80"
                                                Height="80"/>
                                     <TextBlock Text="{Binding DishName}"
-                                               Style="{StaticResource TextStyle}"
+                                               Style="{StaticResource BtnMenuTextStyle}"
                                                HorizontalAlignment="Center"/>
                                     <TextBlock Text="{Binding Price}"
-                                               Style="{StaticResource TextStyle}"
+                                               Style="{StaticResource BtnMenuTextStyle}"
                                                HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Button>

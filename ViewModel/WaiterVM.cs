@@ -73,10 +73,10 @@ namespace ClodeMonnetV2.ViewModel
         {
             if (parameter is Dish dish)
             {
-                var existingItem = OrderItems.FirstOrDefault(i => i.DishId == dish.DishId);
+                var existingItem = OrderItems!.FirstOrDefault(i => i.DishId == dish.DishId);
 
                 if (existingItem != null) existingItem.Quantity++;
-                else OrderItems.Add(new OrderItem { DishId = dish.DishId, Quantity = 1 });
+                else OrderItems!.Add(new OrderItem { DishId = dish.DishId, Quantity = 1 });
             }
         }
 

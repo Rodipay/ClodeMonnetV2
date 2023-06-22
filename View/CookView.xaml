@@ -1,12 +1,69 @@
 ﻿<UserControl x:Class="ClodeMonnetV2.View.CookView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ClodeMonnetV2.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:ClodeMonnetV2.ViewModel"
+             xmlns:convert="clr-namespace:ClodeMonnetV2.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="622"
+             Style="{StaticResource PageStyle}">
+
+    <UserControl.DataContext>
+        <viewModel:CookVM />
+    </UserControl.DataContext>
+
     <Grid>
-            
+
+        <Grid.Resources>
+            <convert:OrderIdToDishNameConverter x:Key="OrderIdToDishNameConverter"/>
+        </Grid.Resources>
+
+        <Border CornerRadius="0, 20, 20, 0">
+            <Border.Background>
+                <SolidColorBrush Color="#212529" />
+            </Border.Background>
+        </Border>
+
+        <ScrollViewer Width="622"
+                      Margin="0, 80, 0 0"
+                      HorizontalAlignment="Left">
+            <ItemsControl ItemsSource="{Binding Orders}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource BtnMenu}">
+                            <StackPanel VerticalAlignment="Center">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBlock Text="Заказ #"
+                                               Style="{StaticResource BtnMenuTextStyle}"/>
+                                    <TextBlock Text="{Binding OrderId}"
+                                               Style="{StaticResource BtnMenuTextStyle}"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+
+                                <TextBlock Text="{Binding OrderStatus}"
+                                           Style="{StaticResource BtnMenuTextStyle}"
+                                           HorizontalAlignment="Center"/>
+
+                                <TextBlock Text="{Binding OrderId, Converter={StaticResource OrderIdToDishNameConverter}}" 
+                                           Style="{StaticResource BtnMenuTextStyle}"
+                                           HorizontalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </ScrollViewer>
+
     </Grid>
 </UserControl>
