@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ClodeMonnetV2.Model;
 using ClodeMonnetV2.Utilities;
@@ -14,7 +15,7 @@ namespace ClodeMonnetV2.ViewModel
     internal class WaiterVM : ViewModelBase
     {
         private Order? _currentOrder;
-        private int? _quantity;
+        private int _quantity = 1;
         private ObservableCollection<Dish>? _dishes;
         private ObservableCollection<OrderItem>? _orderItems;
 
@@ -31,7 +32,7 @@ namespace ClodeMonnetV2.ViewModel
             }
         }
 
-        public int? Quantity
+        public int Quantity
         {
             get => _quantity;
             set
@@ -76,12 +77,17 @@ namespace ClodeMonnetV2.ViewModel
                 var existingItem = OrderItems!.FirstOrDefault(i => i.DishId == dish.DishId);
 
                 if (existingItem != null) existingItem.Quantity++;
-                else OrderItems!.Add(new OrderItem { DishId = dish.DishId, Quantity = 1 });
+                else OrderItems!.Add(new OrderItem { DishId = dish.DishId, Quantity = Quantity });
             }
         }
 
         public void ConfirmOrder(object parameter)
         {
+            if (OrderItems is { Count: 0 }) 
+            {
+                MessageBox.Show("Заказ пуст.");
+                return;
+            }
             RestaurantDbContext context = new RestaurantDbContext();
             CurrentOrder = new Order()
             {
@@ -99,6 +105,7 @@ namespace ClodeMonnetV2.ViewModel
 
             context.OrderItems.AddRange(OrderItems);
             context.SaveChanges();
+            MessageBox.Show("Заказ сформирован.");
         }
 
     }

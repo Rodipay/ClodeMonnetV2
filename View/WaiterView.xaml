@@ -90,7 +90,7 @@
                             <Border>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="130"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{Binding DishId, Converter={StaticResource DishNameConverter}}"
@@ -99,6 +99,8 @@
                                                Style="{StaticResource OrderItemText}" />
                                     <xctk:IntegerUpDown Grid.Column="1"
                                                         Height="30"
+                                                        Minimum="1"
+                                                        Maximum="99"
                                                         Value="{Binding Quantity}"/>
                                 </Grid>
                             </Border>
